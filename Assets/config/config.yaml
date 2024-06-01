@@ -1,0 +1,22 @@
+behaviors:
+  race_behavior:
+    trainer_type: ppo
+    max_steps: 100000
+    time_horizon: 64
+    summary_freq: 1000
+    num_layers: 2
+    hidden_units: 128
+    beta: 5.0e-3
+    epsilon: 0.2
+    learning_rate: 3.0e-4
+    normalize: false
+    use_recurrent: false
+    memory_size: 256
+    sequence_length: 64
+    num_epoch: 3
+    num_mini_batch: 32
+    discount: 0.99
+    gae_lambda: 0.95
+    max_policy_update: 1
+    entropy_loss: 0.01
+    beta_decay: 0.995
