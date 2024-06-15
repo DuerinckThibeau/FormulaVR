@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelController : MonoBehaviour
@@ -27,21 +29,13 @@ public class WheelController : MonoBehaviour
 
 	private void Start()
 	{
-		rb = GetComponentInParent<Rigidbody>();
-		if (rb == null)
-		{
-			Debug.LogError("Rigidbody not found in parent objects.");
-			return;
-		}
+		rb = GetComponent<Rigidbody>();
 		rb.mass = 1500f; // Adjust the mass as needed
 		rb.drag = 0.1f; // Adjust drag to simulate air resistance
 		rb.angularDrag = 0.1f; // Adjust angular drag as needed
 
 		// Ensure the WheelColliders have the correct friction settings
 		SetupWheelColliders();
-
-		// Position WheelColliders to match visual wheels
-		PositionWheelColliders();
 	}
 
 	private void SetupWheelColliders()
@@ -65,30 +59,15 @@ public class WheelController : MonoBehaviour
 		backRight.forwardFriction = forwardFriction;
 		backLeft.forwardFriction = forwardFriction;
 
+
 		frontRight.sidewaysFriction = sidewaysFriction;
 		frontLeft.sidewaysFriction = sidewaysFriction;
 		backRight.sidewaysFriction = sidewaysFriction;
 		backLeft.sidewaysFriction = sidewaysFriction;
 	}
 
-	private void PositionWheelColliders()
-	{
-		PositionWheelCollider(frontRight, frontRightTransform);
-		PositionWheelCollider(frontLeft, frontLeftTransform);
-		PositionWheelCollider(backRight, backRightTransform);
-		PositionWheelCollider(backLeft, backLeftTransform);
-	}
-
-	private void PositionWheelCollider(WheelCollider collider, Transform transform)
-	{
-		collider.transform.position = transform.position;
-		collider.transform.rotation = transform.rotation;
-	}
-
 	private void FixedUpdate()
 	{
-		if (rb == null) return; // Ensure Rigidbody is assigned
-
 		HandleMotor();
 		HandleSteering();
 		UpdateWheels();
@@ -109,8 +88,7 @@ public class WheelController : MonoBehaviour
 		}
 		else
 		{
-			currentAcceleration = Mathf.MoveTowards(currentAcceleration,
-				0, accelerationRate * Time.deltaTime);
+			currentAcceleration = Mathf.MoveTowards(currentAcceleration, 0, accelerationRate * Time.deltaTime);
 		}
 
 		// Smooth braking
@@ -130,6 +108,9 @@ public class WheelController : MonoBehaviour
 		frontLeft.brakeTorque = currentBreakForce;
 		backRight.brakeTorque = currentBreakForce;
 		backLeft.brakeTorque = currentBreakForce;
+
+		Debug.Log("Current Acceleration: " + currentAcceleration);
+		Debug.Log("Current Break Force: " + currentBreakForce);
 	}
 
 	private void HandleSteering()
@@ -137,6 +118,8 @@ public class WheelController : MonoBehaviour
 		currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
 		frontLeft.steerAngle = currentTurnAngle;
 		frontRight.steerAngle = currentTurnAngle;
+
+		Debug.Log("Current Turn Angle: " + currentTurnAngle);
 	}
 
 	private void UpdateWheels()
