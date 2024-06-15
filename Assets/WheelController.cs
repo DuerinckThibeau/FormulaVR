@@ -35,7 +35,7 @@ public class WheelController : MonoBehaviour
 		rb.angularDrag = 0.1f; // Adjust angular drag as needed
 
 		// Ensure the WheelColliders have the correct friction settings
-		SetupWheelColliders();
+		//SetupWheelColliders();
 	}
 
 	private void SetupWheelColliders()
