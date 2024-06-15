@@ -4,6 +4,8 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using System;
+using Random = UnityEngine.Random;
 
 public class CarAgent : Agent
 {
@@ -20,22 +22,22 @@ public class CarAgent : Agent
     private void Start() {
         trackCheckpoints.OnPlayerCorrectCheckpoint += TrackCheckpoints_OnCarCorrectCheckpoint;
         trackCheckpoints.OnPlayerWrongCheckpoint += TrackCheckpoints_OnCarWrongCheckpoint;
+        trackCheckpoints.OnPlayerWinRace += TrackCheckpoints_OnWin;
     }
 
-    private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
+    private void TrackCheckpoints_OnWin(object sender, EventArgs e)
     {
-        if (e.carTransform == transform)
-        {
-            AddReward(-1f);
-        }
+        EndEpisode();
     }
 
-    private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
+    private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, EventArgs e)
     {
-        if (e.carTransform == transform)
-        {
-            AddReward(1f);
-        }
+        AddReward(-1f);
+    }
+
+    private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, EventArgs e)
+    {
+        AddReward(1f);
     }
 
     public override void OnEpisodeBegin() {
@@ -57,13 +59,13 @@ public class CarAgent : Agent
 
         switch (actions.DiscreteActions[0]) {
             case 0: forwardAmount = 0f; break;
-            case 1: forwardAmount = +1f; break;
-            case 2: forwardAmount = -1f; break;
+            case 1: forwardAmount = +4f; break;
+            case 2: forwardAmount = -4f; break;
         }
         switch (actions.DiscreteActions[1]) {
             case 0: turnAmount = 0f; break;
-            case 1: turnAmount = -1f; break;
-            case 2: turnAmount = +1f; break;
+            case 1: turnAmount = +5f; break;
+            case 2: turnAmount = -5f; break;
         }
 
         wheels.SetInputs(forwardAmount, turnAmount);

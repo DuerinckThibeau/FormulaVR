@@ -2003,6 +2003,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144098904}
   m_CullTransparentMesh: 1
+--- !u!1 &155147936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155147937}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &155147937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155147936}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.6943933, z: -0, w: 0.71959573}
+  m_LocalPosition: {x: -7.22, y: 7.04, z: -32.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 87.958, z: 0}
 --- !u!1 &158507132
 GameObject:
   m_ObjectHideFlags: 0
@@ -26861,8 +26892,8 @@ GameObject:
   - component: {fileID: 2130811311823967649}
   - component: {fileID: 2130811311823967650}
   - component: {fileID: 2130811311823967653}
-  - component: {fileID: 2130811311823967652}
   - component: {fileID: 2130811311823967651}
+  - component: {fileID: 2130811311823967654}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -26879,7 +26910,7 @@ Transform:
   m_GameObject: {fileID: 1646621147595706148}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 26.456732, y: 3.45, z: -30.2145}
+  m_LocalPosition: {x: 18.6, y: 3.45, z: -30.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27004,22 +27035,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 1
   TakeActionsBetweenDecisions: 1
---- !u!114 &2130811311823967652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646621147595706148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88b6042bc9a5d4aa58d931eae49442e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
 --- !u!114 &2130811311823967653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27037,19 +27052,37 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 01000000
-    VectorActionSize: 01000000
+      BranchSizes: 0300000003000000
+    VectorActionSize: 0300000003000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 1
   m_BehaviorName: CarDriver
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
+--- !u!114 &2130811311823967654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646621147595706148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397c060799f6e1845925aa795f60beda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  trackCheckpoints: {fileID: 1991262690}
+  spawnPosition: {fileID: 155147937}
 --- !u!1 &2187372878119296061
 GameObject:
   m_ObjectHideFlags: 0
@@ -27453,3 +27486,4 @@ SceneRoots:
   - {fileID: 1061957818}
   - {fileID: 624043882}
   - {fileID: 314153974}
+  - {fileID: 155147937}

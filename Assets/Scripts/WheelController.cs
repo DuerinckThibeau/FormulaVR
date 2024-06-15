@@ -69,10 +69,10 @@ public class WheelController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        float turnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
-        HandleMotor(verticalInput);
-        HandleSteering(turnAngle);
+        //float verticalInput = Input.GetAxis("Vertical");
+        //float turnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
+        //HandleMotor(verticalInput);
+        //HandleSteering(turnAngle);
         UpdateWheels();
     }
 
