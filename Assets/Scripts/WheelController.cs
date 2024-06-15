@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,15 +69,15 @@ public class WheelController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMotor();
-        HandleSteering();
+        float verticalInput = Input.GetAxis("Vertical");
+        float turnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
+        HandleMotor(verticalInput);
+        HandleSteering(turnAngle);
         UpdateWheels();
     }
 
-    private void HandleMotor()
+    private void HandleMotor(float verticalInput)
     {
-        float verticalInput = Input.GetAxis("Vertical");
-
         // Smooth acceleration
         if (verticalInput > 0)
         {
@@ -110,11 +111,10 @@ public class WheelController : MonoBehaviour
         backLeft.brakeTorque = currentBreakForce;
     }
 
-    private void HandleSteering()
+    private void HandleSteering(float turnAngle)
     {
-        currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
-        frontLeft.steerAngle = currentTurnAngle;
-        frontRight.steerAngle = currentTurnAngle;
+        frontLeft.steerAngle = turnAngle;
+        frontRight.steerAngle = turnAngle;
     }
 
     private void UpdateWheels()
@@ -133,6 +133,18 @@ public class WheelController : MonoBehaviour
 
         trans.position = position;
         trans.rotation = rotation;
+    }
+
+    public void StopCompletely() {
+        currentAcceleration = 0;
+        currentBreakForce = 0;
+        currentTurnAngle = 0;
+    }
+
+    internal void SetInputs(float forwardAmount, float turnAmount)
+    {
+        HandleMotor(forwardAmount);
+        HandleSteering(turnAmount);
     }
 }
 

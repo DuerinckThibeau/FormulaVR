@@ -12,23 +12,28 @@ public class CarAgent : Agent
 
     private WheelController wheels;
 
+
     private void Awake() {
-        carDriver = getComponent<WheelController>();
+        wheels = GetComponent<WheelController>();
     }
 
     private void Start() {
-        trackCheckpoints.OnCarCorrectCheckpoint += TrackCheckpoints_OnCarCorrectCheckpoint;
-        trackCheckpoints.OnCarWrongCheckpoint += TrackCheckpoints_OnCarWrongCheckpoint;
+        trackCheckpoints.OnPlayerCorrectCheckpoint += TrackCheckpoints_OnCarCorrectCheckpoint;
+        trackCheckpoints.OnPlayerWrongCheckpoint += TrackCheckpoints_OnCarWrongCheckpoint;
     }
 
-    //private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e) {
-    //    if (e.carTransform == transform) {
-    //        AddReward(-1f);
-    //    }
-    //}
+    private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
+    {
+        if (e.carTransform == transform)
+        {
+            AddReward(-1f);
+        }
+    }
 
-    private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, TrackCheckpoints.OnPlayerCorrectCheckpoint e){
-        if (e.carTransform == transform) {
+    private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
+    {
+        if (e.carTransform == transform)
+        {
             AddReward(1f);
         }
     }
@@ -37,7 +42,7 @@ public class CarAgent : Agent
         transform.position = spawnPosition.position + new Vector3(Random.Range(-5f, +5f), 0, Random.Range(-5f, +5f));
         transform.forward = spawnPosition.forward;
         trackCheckpoints.ResetCheckpoint(transform);
-        carDriver.StopCompletely();
+        wheels.StopCompletely();
     }
 
     public override void CollectObservations(VectorSensor sensor) {
@@ -61,7 +66,7 @@ public class CarAgent : Agent
             case 2: turnAmount = +1f; break;
         }
 
-        carDriver.SetInputs(forwardAmount, turnAmount);
+        wheels.SetInputs(forwardAmount, turnAmount);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut) {
@@ -78,8 +83,9 @@ public class CarAgent : Agent
         discreteActions[1] = turnAction;
     }
 
-    private void OnCollisionEnter(Collision collision) { 
-        if(collision.gameObject.TryGetComponent<Wall>(out Wall wall)) {
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Wall")
+        {
             // Muur geraakt
             AddReward(-0.5f);
             //EndEpisode();
@@ -88,7 +94,7 @@ public class CarAgent : Agent
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Wall>(out Wall wall)) {
+        if (collision.gameObject.tag == "Wall") {
             // Muur geraakt
             AddReward(-0.1f);
         }

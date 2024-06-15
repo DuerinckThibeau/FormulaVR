@@ -5,8 +5,38 @@ using UnityEngine;
 
 public class TrackCheckpoints : MonoBehaviour
 {
-  public event EventHandler OnPlayerCorrectCheckpoint;
-  public event EventHandler OnPlayerWrongCheckpoint;
+
+    public class CarCheckpointEventArgs : EventArgs
+    {
+        public Transform carTransform;
+    }
+
+    public event EventHandler<CarCheckpointEventArgs> OnPlayerCorrectCheckpoint;
+    public event EventHandler<CarCheckpointEventArgs> OnPlayerWrongCheckpoint;
+
+    protected virtual void RaiseCorrectCheckpoint(CarCheckpointEventArgs e)
+    {
+        OnPlayerCorrectCheckpoint?.Invoke(this, e);
+    }
+
+    protected virtual void RaiseWrongCheckpoint(CarCheckpointEventArgs e)
+    {
+        OnPlayerWrongCheckpoint?.Invoke(this, e);
+    }
+
+    // Call this method when the player passes a correct checkpoint
+    public void PlayerPassedCorrectCheckpoint(Transform carTransform)
+    {
+        RaiseCorrectCheckpoint(new CarCheckpointEventArgs { carTransform = carTransform });
+    }
+
+    // Call this method when the player passes a wrong checkpoint
+    public void PlayerPassedWrongCheckpoint(Transform carTransform)
+    {
+        RaiseWrongCheckpoint(new CarCheckpointEventArgs { carTransform = carTransform });
+    }
+  //  public event EventHandler OnPlayerCorrectCheckpoint;
+  //public event EventHandler OnPlayerWrongCheckpoint;
   public event EventHandler OnPlayerWinRace;
 
   private List<CheckPointSingle> checkPointSingleList;
@@ -33,11 +63,26 @@ public class TrackCheckpoints : MonoBehaviour
       if(netCheckpointSingelIndex == checkPointSingleList.Count) {
         OnPlayerWinRace?.Invoke(this, EventArgs.Empty);
       } else {
-        OnPlayerCorrectCheckpoint?.Invoke(this, EventArgs.Empty);
+        OnPlayerCorrectCheckpoint?.Invoke(this, (CarCheckpointEventArgs)EventArgs.Empty);
       }
     } else {
-      OnPlayerWrongCheckpoint?.Invoke(this, EventArgs.Empty);
+      OnPlayerWrongCheckpoint?.Invoke(this, (CarCheckpointEventArgs)EventArgs.Empty);
 
     }
   }
+    public CheckPointSingle GetNextCheckpoint(Transform transform) {
+        return checkPointSingleList[netCheckpointSingelIndex];
+    }
+
+    internal void ResetCheckpoint(Transform transform)
+    {
+        Awake();
+    }
+
+
 }
+
+
+
+
+
