@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class WheelController : MonoBehaviour
 {
+    [SerializeField] TrackCheckpoints trackCheckpoints;
+
+
     [SerializeField] WheelCollider frontRight;
     [SerializeField] WheelCollider frontLeft;
     [SerializeField] WheelCollider backRight;
@@ -30,41 +33,17 @@ public class WheelController : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.mass = 1500f; // Adjust the mass as needed
-        rb.drag = 0.1f; // Adjust drag to simulate air resistance
-        rb.angularDrag = 0.1f; // Adjust angular drag as needed
+        trackCheckpoints.OnPlayerWinRace += TrackCheckpoints_OnPlayerWinRace;
 
-        // Ensure the WheelColliders have the correct friction settings
-        //SetupWheelColliders();
+        rb = GetComponent<Rigidbody>();
+        rb.mass = 1500f;
+        rb.drag = 0.1f;
+        rb.angularDrag = 0.1f;
     }
 
-    private void SetupWheelColliders()
+    private void TrackCheckpoints_OnPlayerWinRace(object sender, EventArgs e)
     {
-        WheelFrictionCurve forwardFriction = new WheelFrictionCurve();
-        forwardFriction.extremumSlip = 1;
-        forwardFriction.extremumValue = 5000;
-        forwardFriction.asymptoteSlip = 2;
-        forwardFriction.asymptoteValue = 2500;
-        forwardFriction.stiffness = 1;
-
-        WheelFrictionCurve sidewaysFriction = new WheelFrictionCurve();
-        sidewaysFriction.extremumSlip = 1;
-        sidewaysFriction.extremumValue = 5000;
-        sidewaysFriction.asymptoteSlip = 2;
-        sidewaysFriction.asymptoteValue = 2500;
-        sidewaysFriction.stiffness = 1;
-
-        frontRight.forwardFriction = forwardFriction;
-        frontLeft.forwardFriction = forwardFriction;
-        backRight.forwardFriction = forwardFriction;
-        backLeft.forwardFriction = forwardFriction;
-        
-
-        frontRight.sidewaysFriction = sidewaysFriction;
-        frontLeft.sidewaysFriction = sidewaysFriction;
-        backRight.sidewaysFriction = sidewaysFriction;
-        backLeft.sidewaysFriction = sidewaysFriction;
+        EndRace();
     }
 
     private void FixedUpdate()
@@ -113,8 +92,9 @@ public class WheelController : MonoBehaviour
 
     private void HandleSteering(float turnAngle)
     {
-        frontLeft.steerAngle = turnAngle;
-        frontRight.steerAngle = turnAngle;
+        currentTurnAngle = maxTurnAngle * turnAngle;
+        frontLeft.steerAngle = currentTurnAngle;
+        frontRight.steerAngle = currentTurnAngle;
     }
 
     private void UpdateWheels()
@@ -140,6 +120,10 @@ public class WheelController : MonoBehaviour
         currentBreakForce = 0;
         currentTurnAngle = 0;
     }
+
+    private void EndRace() {
+        Time.timeScale = 0;   
+    } 
 
     internal void SetInputs(float forwardAmount, float turnAmount)
     {

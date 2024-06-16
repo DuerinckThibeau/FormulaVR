@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] WheelController car = null;
+
+    [SerializeField] Transform spawn = null;
+
+    [SerializeField] TrackCheckpoints trackCheckpoints = null;
+
     [SerializeField] GameObject pauseMenu = null;
     [SerializeField] GameObject startMenu = null;
     
@@ -44,6 +50,16 @@ public class GameController : MonoBehaviour
     }
     public void ExitGame() {
       Application.Quit();
+    }
+
+    public void ResetGame() 
+    { 
+        Transform transform = car.GetComponent<Transform>();
+        transform.position = spawn.position;
+        transform.forward = spawn.forward;
+        trackCheckpoints.ResetCheckpoint(transform);
+        car.StopCompletely();
+
     }
 
 

@@ -6477,6 +6477,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249367342f2128128896a4abf8edd21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  car: {fileID: 2130811311823967649}
+  spawn: {fileID: 155147937}
+  trackCheckpoints: {fileID: 1991262690}
   pauseMenu: {fileID: 1509962332}
   startMenu: {fileID: 1873672647}
 --- !u!4 &548937134
@@ -26979,6 +26982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4adb790b8c75f6c21b94214255577143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trackCheckpoints: {fileID: 1991262690}
   frontRight: {fileID: 418003477}
   frontLeft: {fileID: 1321122689}
   backRight: {fileID: 1757680763}
@@ -26989,7 +26993,7 @@ MonoBehaviour:
   backLeftTransform: {fileID: 3581562039070540954}
   maxAcceleration: 5e+26
   maxBreakingForce: 3.402823e+38
-  maxTurnAngle: 25
+  maxTurnAngle: 2
   accelerationRate: 5e+29
   brakingRate: 1e+12
 --- !u!114 &2130811311823967650
