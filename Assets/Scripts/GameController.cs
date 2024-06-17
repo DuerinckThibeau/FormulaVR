@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject pauseMenu = null;
     [SerializeField] GameObject startMenu = null;
+    [SerializeField] CarSoundManager carSoundManager = null;
     
     bool isPaused = false;
     bool startGame = false;
