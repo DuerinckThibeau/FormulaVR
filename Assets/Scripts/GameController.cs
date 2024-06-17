@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -12,13 +13,23 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject pauseMenu = null;
     [SerializeField] GameObject startMenu = null;
-    
+
+    [SerializeField] TextMeshProUGUI countdownText = null;
+
+    [SerializeField] AudioClip raceStartClip = null;
+
+    private AudioSource audioSource;
+
     bool isPaused = false;
     bool startGame = false;
 
     void Start()
     {
-        
+        startMenu.SetActive(true);
+        countdownText.gameObject.SetActive(false);
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = raceStartClip;
     }
 
     void Update()
@@ -44,9 +55,8 @@ public class GameController : MonoBehaviour
     }
     public void StartGame() {
       if(!startGame) {
-        startGame = true;
-        Time.timeScale = 1;
-      }
+        StartCoroutine(Countdown());
+        }
     }
     public void ExitGame() {
       Application.Quit();
@@ -59,7 +69,29 @@ public class GameController : MonoBehaviour
         transform.forward = spawn.forward;
         trackCheckpoints.ResetCheckpoint(transform);
         car.StopCompletely();
+        startGame = false;
+        isPaused = false;
+        pauseMenu.SetActive(false);
 
+    }
+
+    private IEnumerator Countdown()
+    {
+        countdownText.gameObject.SetActive(true);
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
+        for (int i = 3; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        countdownText.gameObject.SetActive(false);
+        startGame = true;
+        Time.timeScale = 1;
     }
 
 }
