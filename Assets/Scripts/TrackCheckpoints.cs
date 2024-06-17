@@ -70,6 +70,15 @@ public class TrackCheckpoints : MonoBehaviour
         return checkPointSingleList[netCheckpointSingelIndex];
     }
 
+    public Transform GetCurrentCheckpointTransform()
+    {
+        if (netCheckpointSingelIndex == 0)
+        {
+            return checkPointSingleList[0].transform;
+        }
+        return checkPointSingleList[netCheckpointSingelIndex - 1].transform;
+    }
+
     internal void ResetCheckpoint(Transform transform)
     {
         Awake();
