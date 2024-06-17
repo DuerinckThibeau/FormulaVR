@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -13,7 +14,10 @@ public class GameController : MonoBehaviour
 	[SerializeField] AudioSource drivingAudioSource = null;
 	[SerializeField] Rigidbody carRigidbody = null;
 	[SerializeField] float speedThreshold = 1.0f;
+	[SerializeField] TextMeshProUGUI countdownText = null;
+    [SerializeField] AudioClip raceStartClip = null;
 
+	private AudioSource audioSource;		
 	bool isPaused = false;
 	bool startGame = false;
 	bool gameStarted = false;
@@ -22,7 +26,11 @@ public class GameController : MonoBehaviour
 	{
 		idleAudioSource.loop = true;
 		drivingAudioSource.loop = true;
+		startMenu.SetActive(true);
+        countdownText.gameObject.SetActive(false);
 
+		audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = raceStartClip;
 		idleAudioSource.volume = 0;
 		drivingAudioSource.volume = 0;
 	}
@@ -53,7 +61,6 @@ public class GameController : MonoBehaviour
 	void UpdateCarSounds()
 	{
 		float speed = carRigidbody.velocity.magnitude;
-
 		if (speed < speedThreshold)
 		{
 			idleAudioSource.volume = 1;
@@ -70,9 +77,7 @@ public class GameController : MonoBehaviour
 	{
 		if (!startGame)
 		{
-			startGame = true;
-			Time.timeScale = 1;
-			gameStarted = true;
+			Countdown();
 			idleAudioSource.Play();
 			drivingAudioSource.Play();
 		}
@@ -83,6 +88,7 @@ public class GameController : MonoBehaviour
 		Application.Quit();
 	}
 
+
 	public void ResetGame()
 	{
 		Transform transform = car.GetComponent<Transform>();
@@ -90,6 +96,10 @@ public class GameController : MonoBehaviour
 		transform.forward = spawn.forward;
 		trackCheckpoints.ResetCheckpoint(transform);
 		car.StopCompletely();
+		startGame = false;
+        isPaused = false;
+        pauseMenu.SetActive(false);
+
 	}
 
 	public void MuteAllSounds()
@@ -105,4 +115,24 @@ public class GameController : MonoBehaviour
 			isPaused = false;
 		}
 	}
+
+    private IEnumerator Countdown()
+    {
+        countdownText.gameObject.SetActive(true);
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
+        for (int i = 3; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        countdownText.gameObject.SetActive(false);
+        startGame = true;
+        Time.timeScale = 1;
+    }
+
 }
