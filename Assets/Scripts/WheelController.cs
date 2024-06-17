@@ -36,7 +36,7 @@ public class WheelController : MonoBehaviour
         trackCheckpoints.OnPlayerWinRace += TrackCheckpoints_OnPlayerWinRace;
 
         rb = GetComponent<Rigidbody>();
-        rb.mass = 1500f;
+        rb.mass = 1000f;
         rb.drag = 0.1f;
         rb.angularDrag = 0.1f;
     }
@@ -119,6 +119,18 @@ public class WheelController : MonoBehaviour
         currentAcceleration = 0;
         currentBreakForce = 0;
         currentTurnAngle = 0;
+
+
+        frontRight.motorTorque = 0;
+        frontLeft.motorTorque = 0;
+
+        frontRight.brakeTorque = 0;
+        frontLeft.brakeTorque = 0;
+        backRight.brakeTorque = 0;
+        backLeft.brakeTorque = 0;
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     private void EndRace() {
