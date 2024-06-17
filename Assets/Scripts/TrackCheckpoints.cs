@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+
+
+
 public class TrackCheckpoints : MonoBehaviour
 {
     public event EventHandler OnPlayerCorrectCheckpoint;
     public event EventHandler OnPlayerWrongCheckpoint;
     public event EventHandler OnPlayerWinRace;
+    public event EventHandler<PlayerUpdateLapEventArgs> OnPlayerUpdateLap;
 
     private List<CheckPointSingle> checkPointSingleList;
     private int netCheckpointSingelIndex;
+    private int lapCount = 1;
     private void Awake()
     {
         Transform[] checkpoints = GetComponentsInChildren<Transform>();
@@ -41,7 +46,13 @@ public class TrackCheckpoints : MonoBehaviour
             netCheckpointSingelIndex++;
             if (netCheckpointSingelIndex == checkPointSingleList.Count)
             {
-                OnPlayerWinRace?.Invoke(this, EventArgs.Empty);
+                lapCount++;
+                OnPlayerUpdateLap?.Invoke(this, new PlayerUpdateLapEventArgs(lapCount));
+                netCheckpointSingelIndex = 0;
+                if (lapCount >= 4)
+                {
+                    OnPlayerWinRace?.Invoke(this, EventArgs.Empty);
+                }
             }
             else
             {
@@ -65,6 +76,16 @@ public class TrackCheckpoints : MonoBehaviour
     }
 
 
+}
+
+public class PlayerUpdateLapEventArgs : EventArgs
+{
+    public int LapNumber { get; }
+
+    public PlayerUpdateLapEventArgs(int lapNumber)
+    {
+        LapNumber = lapNumber;
+    }
 }
 
 
