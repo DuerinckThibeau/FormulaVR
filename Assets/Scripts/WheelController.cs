@@ -36,7 +36,7 @@ public class WheelController : MonoBehaviour
         trackCheckpoints.OnPlayerWinRace += TrackCheckpoints_OnPlayerWinRace;
 
         rb = GetComponent<Rigidbody>();
-        rb.mass = 1500f;
+        rb.mass = 1000f;
         rb.drag = 0.1f;
         rb.angularDrag = 0.1f;
     }
