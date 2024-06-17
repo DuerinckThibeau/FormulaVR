@@ -6770,14 +6770,11 @@ MonoBehaviour:
   trackCheckpoints: {fileID: 1991262690}
   pauseMenu: {fileID: 1509962332}
   startMenu: {fileID: 1873672647}
-<<<<<<< HEAD
   idleAudioSource: {fileID: 2130811311823967657}
   drivingAudioSource: {fileID: 2130811311823967656}
   carRigidbody: {fileID: 2130811311823967648}
   speedThreshold: 1
-=======
   countdownText: {fileID: 734797876}
->>>>>>> main
 --- !u!4 &548937134
 Transform:
   m_ObjectHideFlags: 0
