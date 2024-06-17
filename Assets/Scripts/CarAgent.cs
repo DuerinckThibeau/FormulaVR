@@ -99,6 +99,7 @@ public class CarAgent : Agent
         {
             case 0: forwardAmount = 0f; break;
             case 1: forwardAmount = +30f; break;
+            case 2: forwardAmount = -30f; break;
         }
         switch (actions.DiscreteActions[1])
         {
@@ -121,6 +122,7 @@ public class CarAgent : Agent
     {
         int forwardAction = 0;
         if (Input.GetKey(KeyCode.UpArrow)) forwardAction = 1;
+        if (Input.GetKey(KeyCode.DownArrow)) forwardAction = 2;
 
         int turnAction = 0;
         if (Input.GetKey(KeyCode.RightArrow)) turnAction = 1;
