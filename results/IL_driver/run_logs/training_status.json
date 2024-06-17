@@ -1,0 +1,38 @@
+{
+    "race_behavior": {
+        "checkpoints": [
+            {
+                "steps": 12066,
+                "file_path": "results\\IL_driver\\race_behavior\\race_behavior-12066.onnx",
+                "reward": 0.0,
+                "creation_time": 1718662235.7443137,
+                "auxillary_file_paths": [
+                    "results\\IL_driver\\race_behavior\\race_behavior-12066.pt"
+                ]
+            },
+            {
+                "steps": 25082,
+                "file_path": "results\\IL_driver\\race_behavior\\race_behavior-25082.onnx",
+                "reward": 0.0,
+                "creation_time": 1718662536.1338856,
+                "auxillary_file_paths": [
+                    "results\\IL_driver\\race_behavior\\race_behavior-25082.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 25082,
+            "file_path": "results\\IL_driver\\race_behavior.onnx",
+            "reward": 0.0,
+            "creation_time": 1718662536.1338856,
+            "auxillary_file_paths": [
+                "results\\IL_driver\\race_behavior\\race_behavior-25082.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
