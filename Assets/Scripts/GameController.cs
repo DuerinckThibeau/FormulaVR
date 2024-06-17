@@ -22,7 +22,10 @@ public class GameController : MonoBehaviour
 	bool startGame = false;
 	bool gameStarted = false;
 
-	void Start()
+	bool countdownFinished = false;
+
+
+    void Start()
 	{
 		idleAudioSource.loop = true;
 		drivingAudioSource.loop = true;
@@ -38,7 +41,7 @@ public class GameController : MonoBehaviour
 	void Update()
 	{
 		startMenu.SetActive(!startGame);
-		if (startGame)
+		if (startGame && countdownFinished)
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
@@ -77,10 +80,10 @@ public class GameController : MonoBehaviour
 	{
 		if (!startGame)
 		{
-			Countdown();
+            StartCoroutine(Countdown());
 			idleAudioSource.Play();
 			drivingAudioSource.Play();
-		}
+        }
 	}
 
 	public void ExitGame()
@@ -99,8 +102,10 @@ public class GameController : MonoBehaviour
 		startGame = false;
         isPaused = false;
         pauseMenu.SetActive(false);
+        countdownFinished = false;
 
-	}
+
+    }
 
 	public void MuteAllSounds()
 	{
@@ -118,6 +123,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator Countdown()
     {
+		startMenu.SetActive(false);
+        startGame = true;
         countdownText.gameObject.SetActive(true);
         if (audioSource != null)
         {
@@ -130,9 +137,18 @@ public class GameController : MonoBehaviour
             yield return new WaitForSecondsRealtime(1);
         }
 
+
+		countdownFinished = true;
         countdownText.gameObject.SetActive(false);
-        startGame = true;
         Time.timeScale = 1;
+        StartCarSounds();
+    }
+
+    private void StartCarSounds()
+    {
+        idleAudioSource.Play();
+        drivingAudioSource.Play();
+        gameStarted = true;
     }
 
 }

@@ -6775,6 +6775,7 @@ MonoBehaviour:
   carRigidbody: {fileID: 2130811311823967648}
   speedThreshold: 1
   countdownText: {fileID: 734797876}
+  raceStartClip: {fileID: 8300000, guid: d435b28678eac1a468199e945607fd09, type: 3}
 --- !u!4 &548937134
 Transform:
   m_ObjectHideFlags: 0
