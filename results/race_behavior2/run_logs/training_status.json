@@ -1,0 +1,29 @@
+{
+    "race_behavior": {
+        "checkpoints": [
+            {
+                "steps": 4300,
+                "file_path": "results\\race_behavior2\\race_behavior\\race_behavior-4300.onnx",
+                "reward": -0.00026308866087871614,
+                "creation_time": 1718642274.9063134,
+                "auxillary_file_paths": [
+                    "results\\race_behavior2\\race_behavior\\race_behavior-4300.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 4300,
+            "file_path": "results\\race_behavior2\\race_behavior.onnx",
+            "reward": -0.00026308866087871614,
+            "creation_time": 1718642274.9063134,
+            "auxillary_file_paths": [
+                "results\\race_behavior2\\race_behavior\\race_behavior-4300.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
